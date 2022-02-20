@@ -8454,102 +8454,113 @@ function renderMain() {
 
 		segmentsString += '<div class="ui bottom attached segment tab" data-tab="' + games[game].id + '">' +
 			'<div class="ui secondary stackable menu">' +
-				'<div class="horizontally fitted item">' +
-					'<h2 class="ui header">' + games[game].title + '</h2>' +
-				'</div>' +
-				'<div class="right horizontally fitted item">' +
-					'<button class="ui basic fluid button addLocation"><i class="plus icon"></i>Add location</button>' +
-					'<button class="ui basic button gameSettings" title="Game settings"><i class="settings icon"></i></button>' +
-				'</div>' +
+			'<div class="horizontally fitted item">' +
+			'<h2 class="ui header">' + games[game].title + '</h2>' +
+			'</div>' +
+			'<div class="right horizontally fitted item">' +
+			'<button class="ui basic fluid button addLocation"><i class="plus icon"></i>Add location</button>' +
+			'<button class="ui basic button gameSettings" title="Game settings"><i class="settings icon"></i></button>' +
+			'</div>' +
 			'</div>' +
 			'<table class="ui table sortable selectable">' +
-				'<thead>' +
-					'<tr>' +
-						'<th class="center aligned four wide">Location</th>' +
-						'<th class="center aligned four wide">Encounter</th>' +
-						'<th class="center aligned four wide">Nickname</th>' +
-						'<th class="center aligned three wide">Status</th>' +
-						'<th class="center aligned no-sort one wide disabled"></th>' +
-					'</tr>' +
-				'</thead>' +
-				'<tbody id="' + games[game].id + '-locations">' +
-				'</tbody>' +
+			'<thead>' +
+			'<tr>' +
+			'<th class="center aligned three wide">Location</th>' +
+			'<th class="center aligned three wide">Encounter 1</th>' +
+			`<th class="center aligned three wide">Encounter 2</th>` +
+			'<th class="center aligned three wide">Nickname</th>' +
+			'<th class="center aligned two wide">Status</th>' +
+			'<th class="center aligned no-sort one wide disabled"></th>' +
+			'</tr>' +
+			'</thead>' +
+			'<tbody id="' + games[game].id + '-locations">' +
+			'</tbody>' +
 			'</table>' +
-		'</div>';
+			'</div>';
 	};
 
 
 	return '<div class="ui stackable top attached borderless menu">' +
 		'<div id="gameMenu" class="ui dropdown item">' +
-			'<i class="sidebar icon"></i>' +
-			'Games' +
-			'<i class="dropdown icon"></i>' +
-			'<div class="menu">' +
-				linksString +
-			'</div>' +
+		'<i class="sidebar icon"></i>' +
+		'Games' +
+		'<i class="dropdown icon"></i>' +
+		'<div class="menu">' +
+		linksString +
+		'</div>' +
 		'</div>' +
 		'<div class="right horizontally fitted item dataControls">' +
-			'<button id="saveData" class="ui green button"><i class="download icon"></i>Export</button>' +
-			'<input id="fileLoader" accept=".json, application/json" type="file">' +
-			'<label id="loadData" class="ui blue button fileInput" for="fileLoader"><i class="upload icon"></i>Import</label>' +
-			'<button id="resetData" class="ui red button"><i class="remove icon"></i>Reset</button>' +
+		'<button id="saveData" class="ui green button"><i class="download icon"></i>Export</button>' +
+		'<input id="fileLoader" accept=".json, application/json" type="file">' +
+		'<label id="loadData" class="ui blue button fileInput" for="fileLoader"><i class="upload icon"></i>Import</label>' +
+		'<button id="resetData" class="ui red button"><i class="remove icon"></i>Reset</button>' +
 		'</div>' +
-	'</div>' +
-	segmentsString;
+		'</div>' +
+		segmentsString;
 }
 
 function renderLocations(game, darkTheme) {
 	string = '';
 
-	game.locations.forEach(function(location, index) {
+	game.locations.forEach(function (location, index) {
 		var locationValue = escapeHTML(location.value);
 
-		string += '<tr' + (location.order !== undefined ? ' class="customLocation"' : '' ) + '>' +
+		string += '<tr' + (location.order !== undefined ? ' class="customLocation"' : '') + '>' +
 			'<td data-sort-value="' + index + '">' + '<div title="Delete" class="ui' + (darkTheme ? ' inverted' : '') + ' basic show-sm float-right singleReset icon button" data-location-id="' + locationValue + '"><i class="remove icon"></i></div>' + escapeHTML(location.name) + '</td>' +
-			'<td data-sort-value="' + escapeHTML(localStorage.getItem(game.id + location.value + '-encounter')) + '">' +
-				'<div data-name="' + (localStorage.getItem(game.id + location.value + '-name') ? escapeHTML(localStorage.getItem(game.id + location.value + '-name')) : '') + '" id="' + game.id + locationValue + '-encounter" class="ui' + (darkTheme ? ' inverted' : '') + ' fluid search selection long dropdown encounter-picker">' +
-					'<input value="' + (localStorage.getItem(game.id + location.value + '-encounter') ? escapeHTML(localStorage.getItem(game.id + location.value + '-encounter'), true) : '') + '" name="pokemon" type="hidden">' +
-					'<i class="dropdown icon"></i>' +
-					'<div class="default text">Encounter</div>' +
-					'<div class="menu"></div>' +
-				'</div>' +
+
+			'<td data-sort-value="' + escapeHTML(localStorage.getItem(game.id + location.value + '-encounter1')) + '">' +
+			'<div data-name="' + (localStorage.getItem(game.id + location.value + '-name1') ? escapeHTML(localStorage.getItem(game.id + location.value + '-name1')) : '') + '" id="' + game.id + locationValue + '-encounter1" class="ui' + (darkTheme ? ' inverted' : '') + ' fluid search selection long dropdown encounter-picker">' +
+			'<input value="' + (localStorage.getItem(game.id + location.value + '-encounter1') ? escapeHTML(localStorage.getItem(game.id + location.value + '-encounter1'), true) : '') + '" name="pokemon" type="hidden">' +
+			'<i class="dropdown icon"></i>' +
+			'<div class="default text">Encounter 1</div>' +
+			'<div class="menu"></div>' +
+			'</div>' +
+			'</td>' +
+
+			'<td data-sort-value="' + escapeHTML(localStorage.getItem(game.id + location.value + '-encounter2')) + '">' +
+			'<div data-name="' + (localStorage.getItem(game.id + location.value + '-name2') ? escapeHTML(localStorage.getItem(game.id + location.value + '-name2')) : '') + '" id="' + game.id + locationValue + '-encounter2" class="ui' + (darkTheme ? ' inverted' : '') + ' fluid search selection long dropdown encounter-picker">' +
+			'<input value="' + (localStorage.getItem(game.id + location.value + '-encounter2') ? escapeHTML(localStorage.getItem(game.id + location.value + '-encounter2'), true) : '') + '" name="pokemon" type="hidden">' +
+			'<i class="dropdown icon"></i>' +
+			'<div class="default text">Encounter 2</div>' +
+			'<div class="menu"></div>' +
+			'</div>' +
 			'</td>' +
 			'<td data-sort-value="' + escapeHTML(localStorage.getItem(game.id + location.value + '-nickname')) + '">' +
-				'<div class="ui' + (darkTheme ? ' inverted' : '') + ' fluid input">' +
-					'<input autocomplete="off" maxlength="' + game.nameLimit + '" class="nickname-input" value="' + (localStorage.getItem(game.id + location.value + '-nickname') ? escapeHTML(localStorage.getItem(game.id + location.value + '-nickname')) : '') + '" id="' + game.id + locationValue + '-nickname" name="nickname" placeholder="Nickname" type="text">' +
-				'</div>' +
+			'<div class="ui' + (darkTheme ? ' inverted' : '') + ' fluid input">' +
+			'<input autocomplete="off" maxlength="' + game.nameLimit + '" class="nickname-input" value="' + (localStorage.getItem(game.id + location.value + '-nickname') ? escapeHTML(localStorage.getItem(game.id + location.value + '-nickname')) : '') + '" id="' + game.id + locationValue + '-nickname" name="nickname" placeholder="Nickname" type="text">' +
+			'</div>' +
 			'</td>' +
 			'<td data-sort-value="' + escapeHTML(localStorage.getItem(game.id + location.value + '-status')) + '">' +
-				'<div id="' + game.id + locationValue + '-status" class="ui' + (darkTheme ? ' inverted' : '') + ' fluid selection long dropdown">' +
-					'<input value="' + (localStorage.getItem(game.id + location.value + '-status') ? escapeHTML(localStorage.getItem(game.id + location.value + '-status')) : '') + '" name="status" type="hidden">' +
-					'<i class="dropdown icon"></i>' +
-					'<div class="default text">Status</div>' +
-					'<div class="menu">' +
-						'<div class="item" data-value="captured"><i class="checkmark icon"></i>Captured</div>' +
-						'<div class="item" data-value="received"><i class="gift icon"></i>Received</div>' +
-						'<div class="item" data-value="traded"><i class="exchange icon"></i>Traded</div>' +
-						'<div class="item" data-value="missed"><i class="ban icon"></i>Missed</div>' +
-						'<div class="item" data-value="stored"><i class="hdd outline icon"></i>Stored</div>' +
-						'<div class="item" data-value="deceased"><i class="remove user icon"></i>Deceased</div>' +
-					'</div>' +
-				'</div>' +
+			'<div id="' + game.id + locationValue + '-status" class="ui' + (darkTheme ? ' inverted' : '') + ' fluid selection long dropdown"  style="{width: 200px}">' +
+			'<input value="' + (localStorage.getItem(game.id + location.value + '-status') ? escapeHTML(localStorage.getItem(game.id + location.value + '-status')) : '') + '" name="status" type="hidden">' +
+			'<i class="dropdown icon"></i>' +
+			'<div class="default text">Status</div>' +
+			'<div class="menu">' +
+			'<div class="item" data-value="captured"><i class="checkmark icon"></i>Captured</div>' +
+			'<div class="item" data-value="received"><i class="gift icon"></i>Received</div>' +
+			'<div class="item" data-value="traded"><i class="exchange icon"></i>Traded</div>' +
+			'<div class="item" data-value="missed"><i class="ban icon"></i>Missed</div>' +
+			'<div class="item" data-value="stored"><i class="hdd outline icon"></i>Stored</div>' +
+			'<div class="item" data-value="deceased"><i class="remove user icon"></i>Deceased</div>' +
+			'</div>' +
+			'</div>' +
 			'</td>' +
 			'<td class="hide-sm"><div title="Delete" class="ui' + (darkTheme ? ' inverted' : '') + ' basic singleReset fluid icon button" data-location-id="' + locationValue + '"><i class="remove icon"></i></div></td>' +
-		'</tr>';
+			'</tr>';
 	});
 
 	return string;
 }
 
 function resetGame(game, removeLocations) {
-	games[selectedGame].locations.forEach(function(location) {
+	games[selectedGame].locations.forEach(function (location) {
 		clearLocation(selectedGame + location.value);
 	});
 
 	if (removeLocations) {
 		localStorage.removeItem(selectedGame + '-custom-locations');
 
-		games[selectedGame].locations = games[selectedGame].locations.filter(function(location) {
+		games[selectedGame].locations = games[selectedGame].locations.filter(function (location) {
 			return location.value[0] !== 'c';
 		});
 	}
@@ -8558,7 +8569,7 @@ function resetGame(game, removeLocations) {
 function filterByProperty(array, property) {
 	var values = {};
 
-	return array.filter(function(entry) {
+	return array.filter(function (entry) {
 		var value = entry[property];
 
 		if (values[value] !== undefined) {
@@ -8598,7 +8609,7 @@ function uploadFile(input) {
 						localStorage.removeItem(data.id + '-custom-locations');
 					}
 
-					locations.forEach(function(location) {
+					locations.forEach(function (location) {
 						populateLocation(data.id, location);
 					});
 
@@ -8627,21 +8638,37 @@ function uploadFile(input) {
 
 function populateLocation(game, data) {
 	var id = game + data.id;
-	var encounterElm = $('#' + id + '-encounter');
+	var encounterElm1 = $('#' + id + '-encounter1');
+	var encounterElm2 = $('#' + id + '-encounter2');
 	var nicknameElm = $('#' + id + '-nickname');
 	var statusElm = $('#' + id + '-status');
 
-	if (data.encounter !== null && data.encounter !== '') {
-		encounterElm.dropdown('set value', data.encounter);
-		encounterElm.dropdown('set text', '<img class="pkmn" src="img/' + data.encounter + '">' + data.name);
-		encounterElm.data('name', data.name);
-		localStorage.setItem(id + '-encounter', data.encounter);
-		localStorage.setItem(id + '-name', data.name);
+	console.log('DATA', data)
+
+	if (data.encounter1 !== null && data.encounter1 !== '') {
+		encounterElm1.dropdown('set value', data.encounter1);
+		encounterElm1.dropdown('set text', '<img class="pkmn" src="img/' + data.encounter1 + '">' + data.name1);
+		encounterElm1.data('name', data.name1);
+		localStorage.setItem(id + '-encounter1', data.encounter1);
+		localStorage.setItem(id + '-name1', data.name1);
 	} else {
-		encounterElm.closest('td').data('sortValue', '');
-		encounterElm.dropdown('clear');
-		localStorage.removeItem(id + '-encounter');
-		localStorage.removeItem(id + '-name');
+		encounterElm1.closest('td').data('sortValue', '');
+		encounterElm1.dropdown('clear');
+		localStorage.removeItem(id + '-encounter1');
+		localStorage.removeItem(id + '-name1');
+	}
+
+	if (data.encounter2 !== null && data.encounter2 !== '') {
+		encounterElm2.dropdown('set value', data.encounter2);
+		encounterElm2.dropdown('set text', '<img class="pkmn" src="img/' + data.encounter2 + '">' + data.name2);
+		encounterElm2.data('name', data.name2);
+		localStorage.setItem(id + '-encounter2', data.encounter2);
+		localStorage.setItem(id + '-name2', data.name2);
+	} else {
+		encounterElm2.closest('td').data('sortValue', '');
+		encounterElm2.dropdown('clear');
+		localStorage.removeItem(id + '-encounter2');
+		localStorage.removeItem(id + '-name2');
 	}
 
 	if (data.nickname !== null && data.nickname !== '') {
@@ -8663,25 +8690,31 @@ function populateLocation(game, data) {
 }
 
 function clearLocation(id) {
-	var encounter = id + '-encounter';
+	var encounter1 = id + '-encounter1';
+	var name1 = id + '-name1';
+	var encounter2 = id + '-encounter2';
+	var name2 = id + '-name2';
 	var nickname = id + '-nickname';
 	var status = id + '-status';
-	var name = id + '-name';
 
-	$('#' + encounter).dropdown('clear');
-	$('#' + encounter).closest('td').data('sortValue', '');
+	$('#' + encounter1).dropdown('clear');
+	$('#' + encounter1).closest('td').data('sortValue', '');
+	$('#' + encounter2).dropdown('clear');
+	$('#' + encounter2).closest('td').data('sortValue', '');
 	$('#' + nickname).val('').closest('td').data('sortValue', '');
 	$('#' + status).dropdown('clear');
 	$('#' + status).closest('td').data('sortValue', '');
 
-	localStorage.removeItem(encounter);
+	localStorage.removeItem(encounter1);
+	localStorage.removeItem(encounter2);
 	localStorage.removeItem(nickname);
 	localStorage.removeItem(status);
-	localStorage.removeItem(name);
+	localStorage.removeItem(name1);
+	localStorage.removeItem(name2);
 }
 
 function sortLocations(game) {
-	var locations = games[game].locations.filter(function(location) {
+	var locations = games[game].locations.filter(function (location) {
 		return location.value[0] !== 'c';
 	});
 
@@ -8692,7 +8725,7 @@ function sortLocations(game) {
 	if (initialLength) {
 		//Sort by order property, ensuring that all locations ordered directly after hardcoded locations get sorted first
 		//which potentially reduces the number of iterations to complete
-		customLocations.sort(function(a, b) {
+		customLocations.sort(function (a, b) {
 			return a.order < b.order ? -1 : a.order > b.order ? 1 : 0;
 		});
 
@@ -8704,8 +8737,8 @@ function sortLocations(game) {
 			var locationRemoval = [];
 			initialLength = customLocations.length;
 
-			customLocations.forEach(function(customLocation, index) {
-				var insertIndex = locations.findIndex(function(e) { return e.value == customLocation.order; });
+			customLocations.forEach(function (customLocation, index) {
+				var insertIndex = locations.findIndex(function (e) { return e.value == customLocation.order; });
 
 				if (insertIndex !== -1) {
 					//Insert location into the main location array
@@ -8717,7 +8750,7 @@ function sortLocations(game) {
 			});
 
 			//Once all locations have been iterated, delete all the ones that were able to be placed to prevent duplicates and satisfy the while-loop.
-			customLocations = customLocations.filter(function(location) {
+			customLocations = customLocations.filter(function (location) {
 				return !locationRemoval.includes(location.value);
 			});
 
@@ -8743,7 +8776,7 @@ function toggleDexLimit(tab) {
 	$('#' + tab + '-locations .encounter-picker').dropdown('setting', 'apiSettings', {
 		'response': {
 			'success': true,
-			'results': value ? pkmnData : pkmnData.slice(0, games[tab].dexLimit).filter(function(pokemon) { return pokemon.exclude === undefined || !pokemon.exclude.includes(tab) })
+			'results': value ? pkmnData : pkmnData.slice(0, games[tab].dexLimit).filter(function (pokemon) { return pokemon.exclude === undefined || !pokemon.exclude.includes(tab) })
 		}
 	});
 }
@@ -8762,7 +8795,7 @@ function togglePokemonAddition(tab) {
 
 function initTab(tab) {
 	$('#' + tab + '-locations .ui.dropdown').dropdown({
-		onChange: function(value, name) {
+		onChange: function (value, name) {
 			var elm = $(this);
 
 			elm.closest('td').data('sortValue', value);
@@ -8772,20 +8805,26 @@ function initTab(tab) {
 	});
 
 	$('#' + tab + '-locations .encounter-picker').dropdown({
-		onChange: function(value, name) {
+		onChange: function (value, name) {
 			var regex = new RegExp(/[^>]*$/, 'i');
 			var elm = $(this);
 
 			elm.closest('td').data('sortValue', value);
 			elm.data('name', name);
-			localStorage.setItem(elm.prop('id').slice(0, -9) + 'name', regex.exec(name));
+
+			var encounterNo = elm.prop('id').slice(-1)
+			console.log('ENCOUTNER', encounterNo)
+
+			console.log(elm.prop('id').slice(0, -10) + 'name', regex.exec(name).toString())
+
+			localStorage.setItem(elm.prop('id').slice(0, -10) + 'name' + encounterNo, regex.exec(name));
 			localStorage.setItem(elm.prop('id'), value);
 			elm.find('.search').blur();
 		},
-		onShow: function() {
+		onShow: function () {
 			$(this).find('.search').focus();
 		},
-		onHide: function() {
+		onHide: function () {
 			var elm = $(this);
 			var value = elm.dropdown('get value');
 
@@ -8808,12 +8847,12 @@ function initTab(tab) {
 		'apiSettings': {
 			'response': {
 				'success': true,
-				'results': localStorage.getItem(tab + 'disable-dex-limit') ? pkmnData : pkmnData.slice(0, games[tab].dexLimit).filter(function(pokemon) { return pokemon.exclude === undefined || !pokemon.exclude.includes(tab) })
+				'results': localStorage.getItem(tab + 'disable-dex-limit') ? pkmnData : pkmnData.slice(0, games[tab].dexLimit).filter(function (pokemon) { return pokemon.exclude === undefined || !pokemon.exclude.includes(tab) })
 			}
 		}
 	});
 
-	$('#' + tab + '-locations .encounter-picker[data-name!=""]').each(function() {
+	$('#' + tab + '-locations .encounter-picker[data-name!=""]').each(function () {
 		var elm = $(this);
 
 		elm.dropdown('set text', '<img class="pkmn" src="img/' + escapeHTML(elm.children('input').val()) + '.png" onerror="this.src=\'img/unknown.png\'">' + escapeHTML(elm.data('name')));
@@ -8839,20 +8878,23 @@ function saveData(game) {
 		blobData.settings.allowCustomPokemon = true;
 	}
 
-	games[game].locations.forEach(function(location) {
-		var encounter = localStorage.getItem(game + location.value + '-encounter');
-		var name = localStorage.getItem(game + location.value + '-name');
+	games[game].locations.forEach(function (location) {
+		console.log('Location:', location, localStorage.getItem(game + location.value + '-name1'))
+		var encounter1 = localStorage.getItem(game + location.value + '-encounter1');
+		var name1 = localStorage.getItem(game + location.value + '-name1');
+		var encounter2 = localStorage.getItem(game + location.value + '-encounter2');
+		var name2 = localStorage.getItem(game + location.value + '-name2');
 		var nickname = localStorage.getItem(game + location.value + '-nickname');
 		var status = localStorage.getItem(game + location.value + '-status');
 
-		if (encounter !== null || name !== null || nickname !== null || status !== null) {
-			blobData.locations.push({'id': location.value, 'encounter': encounter, 'name': name, 'nickname': nickname, 'status': status});
+		if (encounter1 !== null || encounter2 !== null || name1 !== null || name2 !== null || nickname !== null || status !== null) {
+			blobData.locations.push({ 'id': location.value, 'encounter1': encounter1, 'encounter2': encounter2, 'name1': name1, 'name2': name2, 'nickname': nickname, 'status': status });
 		}
 	});
 
 	blobData = JSON.stringify(blobData);
 
-	var blob = new Blob([blobData], {type: 'application/json;charset=utf-8'});
+	var blob = new Blob([blobData], { type: 'application/json;charset=utf-8' });
 
 	saveAs(blob, game + '.' + new Date().toISOString().slice(0, 10) + '.json');
 }
@@ -8866,7 +8908,7 @@ function addLocation(location, game) {
 		location.value = 'c0';
 	}
 
-	var duplicateLocationOrder = customLocations.findIndex(function(e) { return e.order == location.order; });
+	var duplicateLocationOrder = customLocations.findIndex(function (e) { return e.order == location.order; });
 
 	if (duplicateLocationOrder !== -1) {
 		customLocations[duplicateLocationOrder].order = location.value;
@@ -8881,14 +8923,14 @@ function addLocation(location, game) {
 
 function removeLocation(value, game) {
 	var customLocations = JSON.parse(localStorage.getItem(game + '-custom-locations') || '[]');
-	var location = customLocations.find(function(location) {location.value == value});
-	var dependantLocation = customLocations.findIndex(function(e) { return e.order == location.value; });
+	var location = customLocations.find(function (location) { location.value == value });
+	var dependantLocation = customLocations.findIndex(function (e) { return e.order == location.value; });
 
 	if (dependantLocation) {
 		customLocations[dependantLocation].order = location.order;
 	}
 
-	customLocations.splice(customLocations.findIndex(function(e) { return e.value == location.value; }), 1);
+	customLocations.splice(customLocations.findIndex(function (e) { return e.value == location.value; }), 1);
 
 	localStorage.setItem(game + '-custom-locations', JSON.stringify(customLocations));
 
@@ -8911,8 +8953,8 @@ function updateTab(game, updateDropdown) {
 function updateLocationDropdown() {
 	var locations = [];
 
-	games[selectedGame].locations.forEach(function(location) {
-		locations.push({'name': 'After ' + escapeHTML(location.name), 'value': location.value});
+	games[selectedGame].locations.forEach(function (location) {
+		locations.push({ 'name': 'After ' + escapeHTML(location.name), 'value': location.value });
 	});
 
 	$('#locationOrder').dropdown('change values', locations);
@@ -8924,22 +8966,22 @@ sortLocations(selectedGame);
 var darkTheme = localStorage.getItem('darkTheme') === 'true';
 
 $('#dark-theme').prop('checked', darkTheme)
-.on('change', function() {
-	localStorage.setItem('darkTheme', this.checked);
-	document.body.classList = this.checked ? 'dark-theme' : '';
+	.on('change', function () {
+		localStorage.setItem('darkTheme', this.checked);
+		document.body.classList = this.checked ? 'dark-theme' : '';
 
-	if (this.checked) {
-		$('.ui:not(.footer)').addClass('inverted');
-	} else {
-		$('.ui:not(.footer)').removeClass('inverted');
-	}
-});
+		if (this.checked) {
+			$('.ui:not(.footer)').addClass('inverted');
+		} else {
+			$('.ui:not(.footer)').removeClass('inverted');
+		}
+	});
 
-$('#disableDexLimit').on('change', function() {
+$('#disableDexLimit').on('change', function () {
 	toggleDexLimit(selectedGame);
 });
 
-$('#allowCustomPokemon').on('change', function() {
+$('#allowCustomPokemon').on('change', function () {
 	togglePokemonAddition(selectedGame);
 })
 
@@ -8949,8 +8991,8 @@ if (darkTheme) {
 	$('.ui.loading.segment').addClass('inverted');
 }
 
-$(function() {
-	pkmnData.forEach(function(pokemon) {
+$(function () {
+	pkmnData.forEach(function (pokemon) {
 		preloadImage(pokemon.image);
 	});
 
@@ -8959,9 +9001,9 @@ $(function() {
 		img.src = url;
 	}
 
-	$(document).on('click', '#saveData', function() {
+	$(document).on('click', '#saveData', function () {
 		saveData(selectedGame);
-	}).on('click', '.singleReset.button', function() {
+	}).on('click', '.singleReset.button', function () {
 		var id = selectedGame + $(this).data('locationId');
 
 		if ($(this).closest('tr').hasClass('customLocation')) {
@@ -8970,7 +9012,7 @@ $(function() {
 		} else {
 			clearLocation(id);
 		}
-	}).on('change', '.nickname-input', function() {
+	}).on('change', '.nickname-input', function () {
 		var elm = $(this);
 
 		if (elm.val() !== '' && elm.val() !== null) {
@@ -8983,14 +9025,14 @@ $(function() {
 	});
 
 	$('#resetModal').modal({
-		onApprove: function(e) {
+		onApprove: function (e) {
 			resetGame(selectedGame, e.data('action') === 'remove');
 			updateTab(selectedGame, true);
 		}
 	});
 
 	$('#clearModal').modal({
-		onApprove: function(e) {
+		onApprove: function (e) {
 			if (e.data('action') === 'clear') {
 				clearLocation($(this).data('target'));
 			} else if (e.data('action') === 'remove') {
@@ -9002,17 +9044,17 @@ $(function() {
 	});
 
 	$('#importModal').modal({
-		onApprove: function() {
+		onApprove: function () {
 			uploadFile($('#fileLoader')[0]);
 		}
 	});
 
-	$('#customLocationName').on('input', function() {
+	$('#customLocationName').on('input', function () {
 		$(this).parent('.field').toggleClass('error', false);
 	});
 
 	$('#locationModal').modal({
-		onApprove: function() {
+		onApprove: function () {
 			var locationName = $('#customLocationName').val().trim();
 
 			$('#customLocationName').parent().toggleClass('error', locationName == false);
@@ -9021,14 +9063,14 @@ $(function() {
 				return false;
 			}
 
-			addLocation({'name': locationName, 'order': $('#locationOrder').dropdown('get value') || "0"}, selectedGame);
+			addLocation({ 'name': locationName, 'order': $('#locationOrder').dropdown('get value') || "0" }, selectedGame);
 
 			$('#customLocationName').val('');
 			$('#locationOrder').dropdown('set selected', '0');
 		}
 	});
 
-	$('.message .close').on('click', function() {
+	$('.message .close').on('click', function () {
 		$(this).closest('.message').transition('fade');
 	});
 
@@ -9039,12 +9081,12 @@ $(function() {
 	$('[data-tab="' + selectedGame + '"]').addClass('active');
 
 	$('#gameMenu .menu .item').tab({
-		onFirstLoad: function(tabPath) {
+		onFirstLoad: function (tabPath) {
 			if (!games[tabPath].loaded) {
 				updateTab(tabPath, false);
 			}
 		},
-		onLoad: function(tabPath) {
+		onLoad: function (tabPath) {
 			selectedGame = tabPath;
 			localStorage.setItem('selectedGame', tabPath);
 			updateLocationDropdown();
@@ -9065,7 +9107,7 @@ $(function() {
 
 	$('#settingsModal').modal('attach events', '.gameSettings', 'show');
 
-	$('#fileLoader').on('change', function() {
+	$('#fileLoader').on('change', function () {
 		$('#importModal').modal('show');
 	});
 
@@ -9074,7 +9116,7 @@ $(function() {
 	$('#gameMenu').dropdown();
 
 	$('#locationOrder').dropdown({
-		onChange: function(value) {
+		onChange: function (value) {
 			$('#locationOrder').val(value);
 		}
 	});
